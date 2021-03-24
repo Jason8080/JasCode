@@ -108,8 +108,8 @@ public class Settings implements PersistentStateComponent<Settings> {
         if (this.templateGroupMap == null) {
             this.templateGroupMap = new LinkedHashMap<>();
         }
-        this.templateGroupMap.put(DEFAULT_NAME, loadTemplateGroup(DEFAULT_NAME, "entity.java", "vo.java", "dao.java", "service.java", "serviceImpl.java", "controller.java", "mapper.xml", "debug.json"));
-        this.templateGroupMap.put("MybatisPlus", loadTemplateGroup("MybatisPlus", "entity", "vo", "dao", "service", "serviceImpl", "controller",  "mapper.xml"));
+        this.templateGroupMap.put(DEFAULT_NAME, loadTemplateGroup(DEFAULT_NAME, "entity.java", "vo.java", "mapper.java", "service.java", "serviceImpl.java", "controller.java", "mapper.xml", "debug.json"));
+        this.templateGroupMap.put("MybatisPlus", loadTemplateGroup("MybatisPlus", "entity", "vo", "mapper", "service", "serviceImpl", "controller",  "mapper.xml"));
 
         //配置默认类型映射
         if (this.typeMapperGroupMap == null) {
