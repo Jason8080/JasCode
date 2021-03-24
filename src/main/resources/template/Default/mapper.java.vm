@@ -1,7 +1,7 @@
 ##定义初始变量
 #set($tableName = $tool.append($tableInfo.name, "Mapper"))
 ##设置回调
-$!callback.setFileName($tool.append($tableName, "Mapper.java"))
+$!callback.setFileName($tool.append($tableName, ".java"))
 $!callback.setSavePath($tool.append($tableInfo.savePath, "/dao/mapper"))
 
 ##拿到主键
