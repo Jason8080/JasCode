@@ -8,7 +8,7 @@ $!define
 #save("/dao/mapper", "Mapper.java")
 
 ##包路径（宏定义）
-#setPackageSuffix("dao")
+#setPackageSuffix("dao.mapper")
 
 import java.util.List;
 

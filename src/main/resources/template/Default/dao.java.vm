@@ -9,7 +9,7 @@ $!callback.setSavePath($tool.append($tableInfo.savePath, "/dao/mapper"))
     #set($pk = $tableInfo.pkColumn.get(0))
 #end
 
-#if($tableInfo.savePackageName)package $!{tableInfo.savePackageName}.#{end}dao;
+#if($tableInfo.savePackageName)package $!{tableInfo.savePackageName}.#{end}dao.mapper;
 
 import $!{tableInfo.savePackageName}.dao.entity.$!{tableInfo.name};
 import org.apache.ibatis.annotations.Param;
