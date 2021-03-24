@@ -13,8 +13,70 @@ $!define
 import com.baomidou.mybatisplus.extension.service.IService;
 import $!{tableInfo.savePackageName}.dao.entity.$!tableInfo.name;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collection;
+import java.util.List;
+
 ##表注释（宏定义）
 #tableComment("表服务接口")
 public interface $!{tableName} extends IService<$!tableInfo.name> {
+    /**
+    * 批量保存.
+    *
+    * @param list the list
+    */
+    @Transactional(isolation = Isolation.READ_COMMITTED, rollbackFor = Throwable.class)
+    void saveBatch(List<$!tableInfo.name> list);
 
+    /**
+    * 新增/修改 (根据ID).
+    *
+    * @param $tool.firstLowerCase($!tableInfo.name) the file $tool.firstLowerCase($!tableInfo.name)
+    */
+    void modify($!tableInfo.name $tool.firstLowerCase($!tableInfo.name));
+
+    /**
+    * 批量修改 (根据ID).
+    *
+    * @param list the list
+    * @return the int
+    */
+    @Transactional(isolation = Isolation.READ_COMMITTED, rollbackFor = Throwable.class)
+    void updateBatch(List<$!tableInfo.name> list);
+
+    /**
+    * 逻辑删除 (根据ID).
+    *
+    * @param id the id
+    */
+    void logicDelById(Long id);
+
+    /**
+    * 批量逻辑删除 (根据ID).
+    *
+    * @param ids the ids
+    */
+    @Transactional(isolation = Isolation.READ_COMMITTED, rollbackFor = Throwable.class)
+    void logicDelByIds(Collection<Long> ids);
+
+    /**
+    * 条件查询.
+    *
+    * @param $tool.firstLowerCase($!tableInfo.name) the $tool.firstLowerCase($!tableInfo.name)
+    * @return the list
+    */
+    List<$!tableInfo.name> listBy($!tableInfo.name $tool.firstLowerCase($!tableInfo.name));
+
+    /**
+    * 分页条件查询.
+    *
+    * @param page         the page
+    * @param $tool.firstLowerCase($!tableInfo.name) the $tool.firstLowerCase($!tableInfo.name)
+    * @return the list
+    */
+    IPage listPageBy(Page page, $!tableInfo.name $tool.firstLowerCase($!tableInfo.name));
 }
