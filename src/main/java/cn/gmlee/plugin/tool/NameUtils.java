@@ -1,5 +1,6 @@
 package cn.gmlee.plugin.tool;
 
+import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -80,6 +81,18 @@ public class NameUtils {
         }
         matcher.appendTail(buffer);
         return buffer.toString();
+    }
+
+    /**
+     * 包名转路径名
+     * @param pack
+     * @return
+     */
+    public String package2Path(String pack) {
+        if (StringUtils.isEmpty(pack)) {
+            return pack;
+        }
+        return pack.replaceAll("\\.", Matcher.quoteReplacement(File.separator));
     }
 
     /**
