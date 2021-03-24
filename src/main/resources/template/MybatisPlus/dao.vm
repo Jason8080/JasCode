@@ -2,10 +2,10 @@
 $!define
 
 ##设置表后缀（宏定义）
-#setTableSuffix("Dao")
+#setTableSuffix("Mapper")
 
 ##保存文件（宏定义）
-#save("/dao", "Dao.java")
+#save("/dao/mapper", "Mapper.java")
 
 ##包路径（宏定义）
 #setPackageSuffix("dao")

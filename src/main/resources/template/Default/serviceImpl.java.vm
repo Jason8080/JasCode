@@ -12,7 +12,7 @@ $!callback.setSavePath($tool.append($tableInfo.savePath, "/service/impl"))
 #if($tableInfo.savePackageName)package $!{tableInfo.savePackageName}.#{end}service.impl;
 
 import $!{tableInfo.savePackageName}.dao.entity.$!{tableInfo.name};
-import $!{tableInfo.savePackageName}.dao.$!{tableInfo.name}Dao;
+import $!{tableInfo.savePackageName}.dao.$!{tableInfo.name}Mapper;
 import $!{tableInfo.savePackageName}.service.$!{tableInfo.name}Service;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +28,7 @@ import java.util.List;
 @Service("$!tool.firstLowerCase($!{tableInfo.name})Service")
 public class $!{tableName} implements $!{tableInfo.name}Service {
     @Resource
-    private $!{tableInfo.name}Dao $!tool.firstLowerCase($!{tableInfo.name})Dao;
+    private $!{tableInfo.name}Mapper $!tool.firstLowerCase($!{tableInfo.name})Dao;
 
     /**
      * 通过ID查询单条数据
