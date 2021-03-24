@@ -16,82 +16,123 @@ $!define
 ##定义实体对象名
 #set($entityName = $!tool.firstLowerCase($!tableInfo.name))
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.api.ApiController;
-import com.baomidou.mybatisplus.extension.api.R;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import cn.gmlee.tools.base.mod.JsonResult;
 import $!{tableInfo.savePackageName}.dao.entity.$!tableInfo.name;
 import $!{tableInfo.savePackageName}.service.$!{tableInfo.name}Service;
-import org.springframework.web.bind.annotation.*;
+import cn.gmlee.tools.base.mod.PageRequest;
+import cn.gmlee.tools.logback.anno.ApiPrint;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.validation.annotation.Validated;
 
 import javax.annotation.Resource;
-import java.io.Serializable;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 ##表注释（宏定义）
 #tableComment("表控制层")
 @RestController
 @RequestMapping("$!tool.firstLowerCase($!tableInfo.name)")
-public class $!{tableName} extends ApiController {
-    /**
-     * 服务对象
-     */
+@Api(tags = {"$!{tableInfo.comment} 前端控制器"})
+public class $!{tableName} {
+
     @Resource
     private $!{tableInfo.name}Service $!{serviceName};
 
-    /**
-     * 分页查询所有数据
-     *
-     * @param page 分页对象
-     * @param $!entityName 查询实体
-     * @return 所有数据
-     */
-    @GetMapping
-    public R selectAll(Page<$!tableInfo.name> page, $!tableInfo.name $!entityName) {
-        return success(this.$!{serviceName}.page(page, new QueryWrapper<>($!entityName)));
+    @ApiOperation(value = "批量保存")
+    @ApiPrint(value = "批量保存")
+    @PostMapping(value = "saveBatch")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "token", value = "身份令牌", paramType = "header", dataType = "string", dataTypeClass = String.class),
+    })
+    public JsonResult saveBatch(
+        @RequestBody @NotNull(message = "数据是空") @Validated List<$!tableInfo.name> vos
+    ) {
+        $!{serviceName}.saveBatch(vos);
+        return JsonResult.OK;
     }
 
-    /**
-     * 通过主键查询单条数据
-     *
-     * @param id 主键
-     * @return 单条数据
-     */
-    @GetMapping("{id}")
-    public R selectOne(@PathVariable Serializable id) {
-        return success(this.$!{serviceName}.getById(id));
+    @ApiOperation(value = "保存")
+    @ApiPrint(value = "保存")
+    @PostMapping(value = "save")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "token", value = "身份令牌", paramType = "header", dataType = "string", dataTypeClass = String.class),
+    })
+    public JsonResult save(
+        @RequestBody @Validated $!tableInfo.name vo
+    ) {
+        $!{serviceName}.save(vo);
+        return JsonResult.OK;
     }
 
-    /**
-     * 新增数据
-     *
-     * @param $!entityName 实体对象
-     * @return 新增结果
-     */
-    @PostMapping
-    public R insert(@RequestBody $!tableInfo.name $!entityName) {
-        return success(this.$!{serviceName}.save($!entityName));
+    @ApiOperation(value = "新增/修改", notes = "有`主键`则修改反之新增")
+    @ApiPrint(value = "新增/修改")
+    @PostMapping(value = "modify")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "token", value = "身份令牌", paramType = "header", dataType = "string", dataTypeClass = String.class),
+    })
+    public JsonResult modify(
+        @RequestBody @Validated $!tableInfo.name vo
+    ) {
+        $!{serviceName}.modify(vo);
+        return JsonResult.OK;
     }
 
-    /**
-     * 修改数据
-     *
-     * @param $!entityName 实体对象
-     * @return 修改结果
-     */
-    @PutMapping
-    public R update(@RequestBody $!tableInfo.name $!entityName) {
-        return success(this.$!{serviceName}.updateById($!entityName));
+    @ApiOperation(value = "逻辑删除")
+    @ApiPrint(value = "逻辑删除")
+    @ApiImplicitParams({
+    @ApiImplicitParam(name = "token", value = "身份令牌", paramType = "header", dataType = "string", dataTypeClass = String.class),
+        @ApiImplicitParam(name = "id", value = "编号", dataType = "long", dataTypeClass = Long.class),
+    })
+    @PostMapping(value = "logicDelById")
+    public JsonResult logicDelById(
+        @RequestBody @NotNull(message = "编号是空") Long id
+    ) {
+        $!{serviceName}.logicDelById(id);
+        return JsonResult.OK;
     }
 
-    /**
-     * 删除数据
-     *
-     * @param idList 主键结合
-     * @return 删除结果
-     */
-    @DeleteMapping
-    public R delete(@RequestParam("idList") List<Long> idList) {
-        return success(this.$!{serviceName}.removeByIds(idList));
+    @ApiOperation(value = "获取单条")
+    @ApiPrint(value = "获取单条")
+    @GetMapping(value = "getById")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "token", value = "身份令牌", paramType = "header", dataType = "string", dataTypeClass = String.class),
+        @ApiImplicitParam(name = "id", value = "编号", paramType = "query", dataType = "long", dataTypeClass = Long.class),
+    })
+    public JsonResult getById(
+        @NotNull(message = "编号是空") Long id
+    ) {
+        return JsonResult.OK.newly($!{serviceName}.getById(id));
+    }
+
+    @ApiOperation(value = "获取列表")
+    @ApiPrint(value = "获取列表")
+    @PostMapping(value = "listBy")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "token", value = "身份令牌", paramType = "header", dataType = "string", dataTypeClass = String.class),
+    })
+    public JsonResult listBy(
+        @RequestBody $!tableInfo.name vo
+    ) {
+        return JsonResult.OK.newly($!{serviceName}.listBy(vo));
+    }
+
+    @ApiOperation(value = "分页查询")
+    @ApiPrint(value = "分页查询")
+    @PostMapping(value = "listPageBy")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "current", value = "起始页", paramType = "query", dataType = "integer", dataTypeClass = Integer.class),
+        @ApiImplicitParam(name = "size", value = "页数量", paramType = "query", dataType = "integer", dataTypeClass = Integer.class),
+        @ApiImplicitParam(name = "token", value = "身份令牌", paramType = "header", dataType = "string", dataTypeClass = String.class),
+    })
+    public JsonResult listPageBy(
+        PageRequest page, @RequestBody $!tableInfo.name vo
+    ) {
+        return JsonResult.OK.newly($!{serviceName}.listPageBy(new Page(page.current, page.size), vo));
     }
 }
