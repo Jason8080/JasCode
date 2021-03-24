@@ -16,9 +16,62 @@ import $!{tableInfo.savePackageName}.dao.entity.$!{tableInfo.name};
 import $!{tableInfo.savePackageName}.service.$!{tableInfo.name}Service;
 import org.springframework.stereotype.Service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
+import javax.annotation.Resource;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
+
 ##表注释（宏定义）
 #tableComment("表服务实现类")
 @Service("$!tool.firstLowerCase($tableInfo.name)Service")
 public class $!{tableName} extends ServiceImpl<$!{tableInfo.name}Mapper, $!{tableInfo.name}> implements $!{tableInfo.name}Service {
 
+    @Resource
+    $!{tableInfo.name}Mapper $tool.firstLowerCase($!{tableInfo.name})Mapper;
+
+    @Override
+    public void saveBatch(List<$!{tableInfo.name}> list) {
+        list.stream().mapToInt($tool.firstLowerCase($!{tableInfo.name}) -> $tool.firstLowerCase($!{tableInfo.name})Mapper .insert($tool.firstLowerCase($!{tableInfo.name}))).sum();
+    }
+
+    @Override
+    public void modify($!{tableInfo.name} $tool.firstLowerCase($!{tableInfo.name})) {
+        if (Objects.isNull($tool.firstLowerCase($!{tableInfo.name}) .getId())) {
+            $tool.firstLowerCase($!{tableInfo.name})Mapper .insert($tool.firstLowerCase($!{tableInfo.name}));
+        } else {
+            $tool.firstLowerCase($!{tableInfo.name})Mapper .updateById($tool.firstLowerCase($!{tableInfo.name}));
+        }
+    }
+
+    @Override
+    public void updateBatch(List<$!{tableInfo.name}> list) {
+        list.stream().mapToInt($tool.firstLowerCase($!{tableInfo.name}) -> $tool.firstLowerCase($!{tableInfo.name})Mapper .updateById($tool.firstLowerCase($!{tableInfo.name}))).sum();
+    }
+
+    @Override
+    public void logicDelById(Long id) {
+        $!{tableInfo.name} $tool.firstLowerCase($!{tableInfo.name}) = new $!{tableInfo.name}();
+        $tool.firstLowerCase($!{tableInfo.name}) .setId(id);
+        $tool.firstLowerCase($!{tableInfo.name}) .setDel(true);
+        $tool.firstLowerCase($!{tableInfo.name})Mapper .updateById($tool.firstLowerCase($!{tableInfo.name}));
+    }
+
+    @Override
+    public void logicDelByIds(Collection<Long> ids) {
+        ids.forEach(id -> logicDelById(id));
+    }
+
+    @Override
+    public List<$!{tableInfo.name}> listBy($!{tableInfo.name} $tool.firstLowerCase($!{tableInfo.name})) {
+    return $tool.firstLowerCase($!{tableInfo.name})Mapper .selectList(new QueryWrapper($tool.firstLowerCase($!{tableInfo.name})));
+    }
+
+    @Override
+    public IPage listPageBy(Page page, $!{tableInfo.name} $tool.firstLowerCase($!{tableInfo.name})) {
+    return $tool.firstLowerCase($!{tableInfo.name})Mapper .selectPage(page, new QueryWrapper($tool.firstLowerCase($!{tableInfo.name})));
+    }
 }
