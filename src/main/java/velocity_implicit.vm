@@ -1,0 +1,11 @@
+#* @implicitly included *#
+#* @vtlvariable name="author" type="java.lang.String" *#
+#* @vtlvariable name="encode" type="java.lang.String" *#
+#* @vtlvariable name="modulePath" type="java.lang.String" *#
+#* @vtlvariable name="importList" type="java.util.List<java.lang.String>" *#
+#* @vtlvariable name="callback" type="cn.gmlee.plugin.entity.Callback" *#
+#* @vtlvariable name="tool" type="cn.gmlee.plugin.tool.GlobalTool" *#
+#* @vtlvariable name="time" type="cn.gmlee.plugin.tool.TimeUtils" *#
+#* @vtlvariable name="tableInfo" type="cn.gmlee.plugin.entity.TableInfo" *#
+#* @vtlvariable name="tableInfoList" type="java.util.List<cn.gmlee.plugin.entity.TableInfo>" *#
+#* @vtlvariable name="generateService" type="cn.gmlee.plugin.tool.ExtraCodeGenerateUtils" *#
