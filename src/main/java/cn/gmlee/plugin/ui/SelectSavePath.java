@@ -218,8 +218,9 @@ public class SelectSavePath extends JDialog {
             }
         }
         // 保存配置
-        List<TableInfo> tableInfoList = tableInfoService.getTableInfoAndConfig(cacheDataUtils.getDbTableList());
-        for (TableInfo tableInfo : tableInfoList) {
+        TableInfo tableInfo = tableInfoService.getTableInfoAndConfig(cacheDataUtils.getSelectDbTable());
+//        List<TableInfo> tableInfoList = tableInfoService.getTableInfoAndConfig(cacheDataUtils.getDbTableList());
+//        for (TableInfo tableInfo : tableInfoList) {
             tableInfo.setSavePath(savePath);
             tableInfo.setSavePackageName(packageField.getText());
             tableInfo.setPreName(preField.getText());
@@ -229,7 +230,7 @@ public class SelectSavePath extends JDialog {
                 tableInfo.setSaveModelName(module.getName());
             }
             tableInfoService.save(tableInfo);
-        }
+//        }
 
         // 生成代码
         codeGenerateService.generateByUnifiedConfig(getSelectTemplate(), unifiedConfig.isSelected(), !titleConfig.isSelected());

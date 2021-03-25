@@ -76,18 +76,23 @@ public class CodeGenerateServiceImpl implements CodeGenerateService {
         // 将未配置的表进行配置覆盖
         tableInfoList.forEach(tableInfo -> {
             if (StringUtils.isEmpty(tableInfo.getSavePath())) {
-                tableInfo.setSaveModelName(selectedTableInfo.getSaveModelName());
-                tableInfo.setSavePackageName(selectedTableInfo.getSavePackageName());
                 tableInfo.setSavePath(selectedTableInfo.getSavePath());
+                tableInfo.setSavePackageName(selectedTableInfo.getSavePackageName());
+                tableInfo.setPreName(selectedTableInfo.getPreName());
+                tableInfo.setTemplateGroupName(selectedTableInfo.getTemplateGroupName());
+                tableInfo.setSaveModelName(selectedTableInfo.getSaveModelName());
                 tableInfoService.save(tableInfo);
             }
         });
         // 如果使用统一配置，直接全部覆盖
         if (unifiedConfig) {
             tableInfoList.forEach(tableInfo -> {
-                tableInfo.setSaveModelName(selectedTableInfo.getSaveModelName());
-                tableInfo.setSavePackageName(selectedTableInfo.getSavePackageName());
                 tableInfo.setSavePath(selectedTableInfo.getSavePath());
+                tableInfo.setSavePackageName(selectedTableInfo.getSavePackageName());
+                tableInfo.setPreName(selectedTableInfo.getPreName());
+                tableInfo.setTemplateGroupName(selectedTableInfo.getTemplateGroupName());
+                tableInfo.setSaveModelName(selectedTableInfo.getSaveModelName());
+                tableInfoService.save(tableInfo);
             });
         }
 
