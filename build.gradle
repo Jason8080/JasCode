@@ -20,7 +20,7 @@ plugins {
 
 
 group 'cn.gmlee'
-version '1.0.0-GM'
+version '1.0.1-GM'
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8

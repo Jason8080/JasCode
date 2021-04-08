@@ -9,12 +9,14 @@ $!define
 
 ##自动导入包（全局变量）
 $!autoImport
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.io.Serializable;
 
 ##表注释（宏定义）
 #tableComment("表实体类")
 @SuppressWarnings("serial")
+@TableName("$!{tableInfo.preName}$!tool.firstLowerCase($tableInfo.name)")
 public class $!{tableInfo.name} extends Model<$!{tableInfo.name}> {
 #foreach($column in $tableInfo.fullColumn)
     #if(${column.comment})//${column.comment}#end
