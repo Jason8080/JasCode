@@ -31,7 +31,7 @@
       <ul>
         <li>1.修复多表生成时前缀无法通用bug</li>
       </ul>
-      <p>1.0.0-GM</p>
+      <p>1.0.1-GM</p>
       <ul>
         <li>1.增加对Swagger对mybatisPlus表名支持</li>
       </ul>
